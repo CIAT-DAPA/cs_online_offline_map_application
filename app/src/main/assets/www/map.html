@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <script>L_PREFER_CANVAS = true;</script>
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <script src="js/leaflet.js"></script>
+        <script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false"></script>
+        <script src="http://matchingnotes.com/javascripts/leaflet-google.js"></script>
+        <style>
+            body {
+                padding: 0;
+                margin: 0;
+            }
+            html, body, #map {
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
+        <script type="text/javascript">
+            // Vars
+            var map=null;
+            var map_center_lat=0;
+            var map_center_lon=0;
+            var container='map';
+            var icon = L.icon({
+                iconUrl: 'images/location.png',
+                iconSize:     [20, 30], // size of the icon
+                iconAnchor:   [20, 30], // point of the icon which will correspond to marker's location
+                popupAnchor:  [-3, -20] // point from which the popup should open relative to the iconAnchor
+            });
+
+            var map = new L.Map('map', {center: new L.LatLng(51.51, -0.11), zoom: 9});
+            var googleLayer = new L.Google('ROADMAP');
+            map.addLayer(googleLayer);
+
+            /*
+            var map = L.map(config.map_container, { center: new L.LatLng(0, 0), zoom: 1, minZoom: 1, maxZoom: config.map_zoom_max });
+			var layer = new L.TileLayer.GeoPackage(Tiles, { tms: true });
+			map.addLayer(layer);
+            */
+
+            /*
+            map = L.map(container).setView([map_center_lat, map_center_lon],1);
+            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 5}).addTo(map);
+            */
+
+            function  setCenterMap(lat, lon){
+                map_center_lat=lat;
+                map_center_lon=lon;
+            }
+
+            function  addMarker(lat,lon,msg){
+                var marker=L.marker([lon, lat], {icon: icon}).addTo(map);
+                marker.bindPopup(msg).openPopup();
+            }
+        </script>
+    </body>
+</html>
