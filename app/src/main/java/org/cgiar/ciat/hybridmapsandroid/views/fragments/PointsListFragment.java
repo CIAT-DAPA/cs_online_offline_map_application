@@ -42,7 +42,7 @@ public class PointsListFragment extends Fragment {
             fgm_points_list_list_view.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, getPoints()));
         }
         catch (Exception e){
-            Log.d("DB", e.getMessage());
+            Log.d("VIEW_FRAG_POINT", e.getMessage());
         }
     }
 

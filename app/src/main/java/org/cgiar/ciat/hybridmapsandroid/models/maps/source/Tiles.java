@@ -1,5 +1,7 @@
 package org.cgiar.ciat.hybridmapsandroid.models.maps.source;
 
+import android.util.Base64;
+
 /**
  * Created by HSOTELO on 1/20/2016.
  */
@@ -12,7 +14,7 @@ public class Tiles {
     private int zoom_level;
     private long tile_column;
     private long tile_row;
-    private String tile_data;
+    private byte[] tile_data;
 
     /*Properties*/
     public long getId() {
@@ -47,12 +49,16 @@ public class Tiles {
         this.tile_row = tile_row;
     }
 
-    public String getTile_data() {
+    public byte[] getTile_data() {
         return tile_data;
     }
 
-    public void setTile_data(String tile_data) {
+    public void setTile_data(byte[] tile_data) {
         this.tile_data = tile_data;
+    }
+
+    public String getTile_dataBase64(){
+        return Base64.encodeToString(this.tile_data,Base64.NO_WRAP);
     }
 
     /* Methods */
@@ -71,7 +77,7 @@ public class Tiles {
      * @param tile_row
      * @param tile_data
      */
-    public Tiles(long id, int zoom_level, long tile_column, long tile_row, String tile_data) {
+    public Tiles(long id, int zoom_level, long tile_column, long tile_row, byte[] tile_data) {
         this.id = id;
         this.zoom_level = zoom_level;
         this.tile_column = tile_column;

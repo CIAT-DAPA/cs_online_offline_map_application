@@ -11,6 +11,7 @@ import org.cgiar.ciat.hybridmapsandroid.R;
 import org.cgiar.ciat.hybridmapsandroid.models.points.repositories.PointsDB;
 import org.cgiar.ciat.hybridmapsandroid.models.points.source.Points;
 import org.cgiar.ciat.hybridmapsandroid.tools.leaflet.L;
+import org.cgiar.ciat.hybridmapsandroid.tools.leaflet.TileLayerGeoPackage;
 import org.cgiar.ciat.hybridmapsandroid.tools.map.LatLon;
 import org.cgiar.ciat.hybridmapsandroid.tools.map.Marker;
 
@@ -26,6 +27,7 @@ public class MapsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         act_map_web_view=(WebView)findViewById(R.id.act_map_web_view);
+        act_map_web_view.addJavascriptInterface(new TileLayerGeoPackage(this),"Android");
         map = new L(this,act_map_web_view);
         map.init();
         loadMarkers();

@@ -34,20 +34,20 @@ public class PointsDB extends DBBase {
 
     public class PointsEntity {
         public List all() {
-            List points = new LinkedList();
+            List entities = new LinkedList();
             String query = "SELECT fid, id, name, lat, lon FROM " + Points.TABLE_NAME;
             try {
 
                 SQLiteDatabase db = getWritableDatabase();
                 Cursor cursor = db.rawQuery(query, null);
-                Points point = null;
+                Points entity = null;
                 if (cursor.moveToFirst()) {
                     do {
-                        point = new Points(cursor.getInt(0),cursor.getInt(1),cursor.getString(2),cursor.getDouble(3),cursor.getDouble(4));
-                        points.add(point);
+                        entity = new Points(cursor.getInt(0),cursor.getInt(1),cursor.getString(2),cursor.getDouble(3),cursor.getDouble(4));
+                        entities.add(entity);
                     } while (cursor.moveToNext());
                 }
-                return points;
+                return entities;
             }catch (Exception e){
                 Log.d("DB_POINTS_POINTS",e.getMessage());
                 return null;

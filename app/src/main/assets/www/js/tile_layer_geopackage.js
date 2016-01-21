@@ -1,20 +1,14 @@
 L.TileLayer.GeoPackage = L.TileLayer.extend({
-	// database
-	dbTiles: null,
 
-	initialize: function(db, options) {
-		L.Util.setOptions(this, options);
-		this.dbTiles = db;
-	},
+	initialize: function(options) {
+    		L.Util.setOptions(this, options);
+    	},
 
 	getTileUrl: function(tilePoint, tile) {
 
-		this.dbTiles.getTiles(tilePoint.x,tilePoint.y,tilePoint.z).then(function (tiles) {
-				alert(JSON.stringify(tiles));
-				var items = angular.copy(tiles);
-				tile.src = 'data:image/png;base64,' + items[0].tile_data;
+		var tiles=getTiles(tilePoint.x,tilePoint.y,tilePoint.z);
+		tile.src = 'data:image/png;base64,' + tiles;
 
-			});
 	},
 
 	_loadTile: function(tile, tilePoint) {
