@@ -17,7 +17,7 @@ public class MapDB  extends DBBase {
 
     /* Constants */
     // name of database
-    private static final String DB_NAME = "colombia.gpkg";
+    private static final String DB_NAME = "tiles.gpkg";
     private static final int DB_VERSION = 1;
 
     /**

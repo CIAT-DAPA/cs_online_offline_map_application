@@ -29,7 +29,7 @@
             var map=null;
             var map_center_lat=0;
             var map_center_lon=0;
-            var map_max_zoom=18;
+            var map_max_zoom=10;
             var container='map';
             var icon = L.icon({
                 iconUrl: 'images/location.png',
@@ -44,17 +44,14 @@
             map.addLayer(googleLayer);
             */
 
-
             var map = L.map(container, { center: new L.LatLng(map_center_lat, map_center_lon), zoom: 1, minZoom: 1, maxZoom: map_max_zoom });
-			//var layer = new L.TileLayer.GeoPackage(Tiles, { tms: true });
 			var layer = new L.TileLayer.GeoPackage({ tms: true });
 			map.addLayer(layer);
 
 
-            /*
-            map = L.map(container).setView([map_center_lat, map_center_lon],1);
+/*            map = L.map(container).setView([map_center_lat, map_center_lon],1);
             L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: map_max_zoom}).addTo(map);
-            */
+*/
 
             function  setCenterMap(lat, lon){
                 map_center_lat=lat;
@@ -62,7 +59,7 @@
             }
 
             function  addMarker(lat,lon,msg){
-                var marker=L.marker([lat, lon], {icon: icon}).addTo(map);
+                var marker=L.marker([lon, lat], {icon: icon}).addTo(map);
                 marker.bindPopup(msg).openPopup();
             }
         </script>
