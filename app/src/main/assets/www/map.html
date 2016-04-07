@@ -27,6 +27,7 @@
         <script type="text/javascript">
             // Vars
             var map=null;
+            var layer = null;
             var map_center_lat=0;
             var map_center_lon=0;
             var map_max_zoom=10;
@@ -44,21 +45,28 @@
             map.addLayer(googleLayer);
             */
 
-            var map = L.map(container, { center: new L.LatLng(map_center_lat, map_center_lon), zoom: 1, minZoom: 1, maxZoom: map_max_zoom });
+/*            var map = L.map(container, { center: new L.LatLng(map_center_lat, map_center_lon), zoom: 1, minZoom: 1, maxZoom: map_max_zoom });
 			var layer = new L.TileLayer.GeoPackage({ tms: true });
 			map.addLayer(layer);
+*/
 
-
-/*            map = L.map(container).setView([map_center_lat, map_center_lon],1);
+            /*map = L.map(container).setView([map_center_lat, map_center_lon],1);
             L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: map_max_zoom}).addTo(map);
 */
 
-            function  setCenterMap(lat, lon){
-                map_center_lat=lat;
-                map_center_lon=lon;
+            function init_map(work_mode, url_online){
+                if(work_mode == 1){
+                    map = L.map(container).setView([map_center_lat, map_center_lon],1);
+                    L.tileLayer(url_online, {maxZoom: map_max_zoom}).addTo(map);
+                }
+                else{
+                    map = L.map(container, { center: new L.LatLng(map_center_lat, map_center_lon), zoom: 1, minZoom: 1, maxZoom: map_max_zoom });
+			        layer = new L.TileLayer.GeoPackage({ tms: true });
+			        map.addLayer(layer);
+                }
             }
 
-            function  addMarker(lat,lon,msg){
+            function addMarker(lat,lon,msg){
                 var marker=L.marker([lon, lat], {icon: icon}).addTo(map);
                 marker.bindPopup(msg).openPopup();
             }

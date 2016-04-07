@@ -1,8 +1,10 @@
 package org.cgiar.ciat.hybridmapsandroid.views.activities;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
@@ -10,6 +12,7 @@ import android.webkit.WebView;
 import org.cgiar.ciat.hybridmapsandroid.R;
 import org.cgiar.ciat.hybridmapsandroid.models.points.repositories.PointsDB;
 import org.cgiar.ciat.hybridmapsandroid.models.points.source.Points;
+import org.cgiar.ciat.hybridmapsandroid.tools.Preferences;
 import org.cgiar.ciat.hybridmapsandroid.tools.leaflet.L;
 import org.cgiar.ciat.hybridmapsandroid.tools.leaflet.TileLayerGeoPackage;
 import org.cgiar.ciat.hybridmapsandroid.tools.map.LatLon;
@@ -17,7 +20,7 @@ import org.cgiar.ciat.hybridmapsandroid.tools.map.Marker;
 
 import java.util.List;
 
-public class MapsActivity extends ActionBarActivity {
+public class MapsActivity extends Activity {
     private WebView act_map_web_view;
     private L map;
 
@@ -26,12 +29,20 @@ public class MapsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        act_map_web_view=(WebView)findViewById(R.id.act_map_web_view);
-        act_map_web_view.addJavascriptInterface(new TileLayerGeoPackage(this),"Android");
-        map = new L(this,act_map_web_view);
-        map.init();
-        loadMarkers();
-        map.showMarkers();
+        try{
+            // Preferences
+            Preferences.init(getSharedPreferences(Preferences.NAME,Context.MODE_PRIVATE));
+            // Controls
+            act_map_web_view=(WebView)findViewById(R.id.act_map_web_view);
+            act_map_web_view.addJavascriptInterface(new TileLayerGeoPackage(this),"Android");
+            map = new L(this,act_map_web_view);
+            map.init();
+            loadMarkers();
+            map.showMarkers();
+        }catch (Exception e){
+            Log.d("ACT", e.getMessage());
+        }
+
     }
 
     private void loadMarkers(){
@@ -58,6 +69,7 @@ public class MapsActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this,SettingsActivity.class));
             return true;
         }
         if (id == R.id.action_points) {

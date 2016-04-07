@@ -1,17 +1,19 @@
 package org.cgiar.ciat.hybridmapsandroid.views.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import org.cgiar.ciat.hybridmapsandroid.R;
+import org.cgiar.ciat.hybridmapsandroid.tools.Preferences;
 import org.cgiar.ciat.hybridmapsandroid.views.fragments.PointsListFragment;
 
-public class PointsActivity extends ActionBarActivity {
+public class PointsActivity extends FragmentActivity {
 
     Fragment fgm_points_list;
 
@@ -19,8 +21,9 @@ public class PointsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_points);
-
         try{
+            // Preferences
+            Preferences.init(getSharedPreferences(Preferences.NAME, Context.MODE_PRIVATE));
             fgm_points_list=new PointsListFragment();
             if(savedInstanceState == null){
                 getSupportFragmentManager().beginTransaction().add(R.id.act_points_container, fgm_points_list,"points" ).commit();
@@ -48,6 +51,7 @@ public class PointsActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this,SettingsActivity.class));
             return true;
         }
         if (id == R.id.action_maps) {

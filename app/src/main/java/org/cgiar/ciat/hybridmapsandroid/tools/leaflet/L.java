@@ -8,6 +8,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import org.cgiar.ciat.hybridmapsandroid.tools.Preferences;
 import org.cgiar.ciat.hybridmapsandroid.tools.map.Marker;
 
 import java.util.LinkedList;
@@ -53,9 +54,7 @@ public class L extends WebChromeClient {
     public void init(){
         browser.setWebChromeClient(new WebChromeClient() {
             public void onConsoleMessage(String message, int lineNumber, String sourceID) {
-                Log.d("MapCiat", message + " -- From line "
-                        + lineNumber + " of "
-                        + sourceID);
+                Log.d("MapCiat", message + " -- From line " + lineNumber + " of " + sourceID);
             }
         });
         WebSettings browser_settings = browser.getSettings();
@@ -70,7 +69,10 @@ public class L extends WebChromeClient {
         browser.setWebViewClient(new WebViewClient(){
             @Override
             public void onPageFinished(WebView view, String url){
-                super.onPageFinished(browser,url);
+                super.onPageFinished(browser, url);
+                boolean work_mode = Preferences.getInstance().getWorkMode();
+                String url_online = Preferences.getInstance().getOnlineTileServer();
+                browser.loadUrl("javascript:init_map(" + (work_mode ? "1" : "0") + ",'" + url_online + "')");
                 List<Marker> _markers=markers;
                 for(int i=0;i<_markers.size();i++)
                     browser.loadUrl("javascript:addMarker(" + _markers.get(i).getPosition().toString()  + ",'" + _markers.get(i).getTitle() +"')");

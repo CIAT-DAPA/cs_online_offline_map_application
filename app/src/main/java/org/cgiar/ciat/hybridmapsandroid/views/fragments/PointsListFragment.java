@@ -12,6 +12,7 @@ import android.widget.ListView;
 import org.cgiar.ciat.hybridmapsandroid.R;
 import org.cgiar.ciat.hybridmapsandroid.models.points.repositories.PointsDB;
 import org.cgiar.ciat.hybridmapsandroid.models.points.source.Points;
+import org.cgiar.ciat.hybridmapsandroid.views.adapters.PointsListAdapter;
 
 import java.util.List;
 
@@ -39,7 +40,8 @@ public class PointsListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         fgm_points_list_list_view=(ListView)getView().findViewById(R.id.fgm_points_list_list_view);
         try{
-            fgm_points_list_list_view.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, getPoints()));
+            fgm_points_list_list_view.setAdapter(new PointsListAdapter(getActivity(),getPoints()));
+            //fgm_points_list_list_view.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, getPoints()));
         }
         catch (Exception e){
             Log.d("VIEW_FRAG_POINT", e.getMessage());
@@ -53,15 +55,16 @@ public class PointsListFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_points_list, container, false);
     }
 
-    private String[] getPoints(){
+    private List<Points> getPoints(){
         String[] res=null;
         PointsDB db = new PointsDB(getActivity().getApplicationContext());
         PointsDB.PointsEntity entity = db.new PointsEntity();
-        List<Points> points=entity.all();
+        return entity.all();
+        /*List<Points> points=entity.all();
         res=new String[points.size()];
         for(int i=0;i<points.size();i++)
             res[i]=points.get(i).toString();
-        return res;
+        return res;*/
     }
 
 }
