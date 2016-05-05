@@ -14,7 +14,7 @@
     <string name="set_txt_layer_online">http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png</string>
     <string name="set_lbl_layer_online">Set the URL of the tile server when working in online mode</string>
     <string name="set_txt_layer_offline"></string>
-    <string name="set_lbl_layer_offline">Set the URL of the tile server when working in offline mode for downloading the basemap information</string>
+    <string name="set_lbl_layer_offline">Set the URL of the tile server when working in offline mode to download the basemap information</string>
     <string name="set_hnt_url">https://www.myserver.com</string>
     <string name="set_cmd_save">Save</string>
 
